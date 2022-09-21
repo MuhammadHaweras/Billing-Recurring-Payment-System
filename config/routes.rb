@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  root 'users#index'
+  root 'welcome#index'
   devise_for :users
-  
+
+  namespace :admin do
+    resources :users    
+  end
+  namespace :buyer do
+    resources :users
+  end  
 end

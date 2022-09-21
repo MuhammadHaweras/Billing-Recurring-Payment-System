@@ -1,7 +1,8 @@
 class User < ApplicationRecord
 
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum role: {admin:0, buyer:1}
-       
+  enum role: [:admin, :buyer]
+
+      
 end

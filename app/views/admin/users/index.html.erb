@@ -1,0 +1,19 @@
+<p class="my-4">
+    <%= link_to 'Send Invitation', new_user_invitation_path, class: 'btn btn-lg btn-primary'%>
+    <table class='table'>
+  <tr>
+    <th scope='col'>Name</th>
+    <th scope='col'>Email</th>
+    <th scope='col'>Role</th>
+    <th cscope='col'/>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name  %></td>
+      <td><%= user.email  %></td>
+      <td><%= user.role %></td>
+    </tr>
+  <% end %>
+</table>
+</p>
+
