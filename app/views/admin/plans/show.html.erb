@@ -1,0 +1,14 @@
+<div class="card my-2">
+  <div class="card-header">
+    <%= @plan.plan_name %>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><%= @plan.monthly_fee %> </li>
+    <li class="list-group-item">
+      <div class="btn-group mr-2" role="group" aria-label="links">
+        <%= link_to 'Edit', edit_admin_plan_path(@plan), class:'btn btn-primary'%>
+        <%= link_to 'Back', admin_plans_path, class:'btn btn-info'%>
+      </div>
+    </li>
+  </ul>
+</div>

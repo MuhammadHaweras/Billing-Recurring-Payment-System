@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :users    
-  end
+    resources :plans do
+      resources :features
+    end  
+  end   
+  
   namespace :buyer do
     resources :users
   end  
