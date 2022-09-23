@@ -1,17 +1,15 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
+<h2 class="mt-4 text-primary"><%= t "devise.invitations.new.header" %></h2>
 
 <%= simple_form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
   <%= f.error_notification %>
 
   <% resource.class.invite_key_fields.each do |field| -%>
       <%= f.input :name %>
-      <%= f.input field %>
-      <p>Your Role: </p>
-      <%= f.select :role, options_for_select(['buyer']) %>
-   
+      <%= f.input field , class: 'mt-2' %>
+      <p  class='mt-4 font-bold'>Role: <%= f.select :role, options_for_select(User.roles.keys.values_at(1)) %><p>
   <% end %>
 
   <div class="form-actions">
-    <%= f.button :submit, t("devise.invitations.new.submit_button") %>
+    <%= f.button :submit, t("devise.invitations.new.submit_button"), class: 'btn btn-default btn-primary my-3' %>
   </div>
 <% end %>

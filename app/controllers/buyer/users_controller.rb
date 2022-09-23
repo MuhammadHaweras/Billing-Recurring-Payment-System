@@ -1,9 +1,6 @@
 class Buyer::UsersController < ApplicationController
   
   def index
-  	@users = User.where(role: 'buyer')
+  	@users = User.buyer_role
   end	
-  
-
- 
 end	

@@ -1,0 +1,7 @@
+<%= simple_form_for [:admin, @plan, @feature] do |f| %>
+  <%= f.input :feature_name %>
+  <%= f.input :code %>
+  <%= f.input :unit_price %>
+  <%= f.input :max_unit_limit %>
+  <%= f.button :submit, class: 'btn btn-default btn-primary my-4' %>
+<% end %>

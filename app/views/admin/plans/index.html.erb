@@ -1,21 +1,15 @@
-<p class="my-4">
-  <%= link_to 'Send Invitation', new_user_invitation_path, class: 'btn btn-lg btn-primary'%>
-</p>
-<p> <%= link_to 'New Plan', new_admin_plan_path, class: 'btn btn-lg btn-primary'%></p>
- 
+<h1 class='text-center text-primary mt-2'>All Plans</h1>
 <% @plans.each do |plan| %>
-  <div class="card my-2">
-  <h5 class="card-header"><%= plan.plan_name %></h5>
-    <div class="card-body">
-      <h5 class="card-title"><%= plan.monthly_fee %></h5>
-      <div class="btn-group mr-2" role="group" aria-label="links">
-        <%= link_to 'Show', admin_plan_path(plan), class:'btn btn-primary'%>
-        <%= link_to 'Edit', edit_admin_plan_path(plan), class:'btn btn-info'%>
-        <%= link_to 'Destroy', admin_plans_path(plan), method: :delete,
+  <div class='card my-4'>
+    <h5 class='card-header'><%= plan.plan_name %></h5>
+      <div class='card-body'>
+        <h5 class='card-title'><%= plan.monthly_fee %></h5>
+          <div class='btn-group mr-2' role='group' aria-label='links'>
+            <%= link_to 'Show', admin_plan_path(plan), class:'btn btn-primary'%>
+            <%= link_to 'Edit', edit_admin_plan_path(plan), class:'btn btn-info'%>
+            <%= link_to 'Destroy', admin_plan_path(plan), method: :delete,
                                class:'btn btn-danger', data: { confirm: 'Are you sure?'} %>
+          </div>
       </div>
-    </div>
   </div>
 <% end %>  
-
-

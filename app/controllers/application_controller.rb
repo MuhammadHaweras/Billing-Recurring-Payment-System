@@ -3,18 +3,19 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
-
   def after_sign_in_path_for(resource)
-    if current_user.role == 'admin'
-       admin_plans_path
-    else
-      buyer_users_path
-    end
+    return admin_plans_path if current_user.admin?
+    return buyer_users_path if current_user.buyer?
+  end
+
+  def after_accept_path_for(_resource)
+    return admin_plans_path if current_user.admin?
+    return buyer_users_path if current_user.buyer?
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password, :role) }
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password, :role) }
-     devise_parameter_sanitizer.permit(:invite, keys: [:name,:role])
+    devise_parameter_sanitizer.permit(:invite, keys: [:name,:role])
   end
 end
