@@ -11,7 +11,8 @@ class Admin::PlansController < Admin::AdminsController
   end  
 
   def create
-    @plan = Plan.new(plan_params)   
+    @plan = Plan.new(plan_params)
+
     if @plan.save 
       redirect_to admin_plans_path, notice: 'Plan added!'    
     else   

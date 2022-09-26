@@ -9,10 +9,9 @@
   </li>
   <li class='list-group-item'>
     <div class='btn-group' role='group' aria-label='grouping'>
-    <%= link_to 'Edit Feature' , edit_admin_plan_feature_path(@plan.id,feature.id), class: 'btn btn-warning' %> 
-    <%= link_to 'Delete Feature', admin_plan_feature_path(@plan.id,feature.id),
-                                  method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> 
+      <%= link_to 'Edit Feature' , edit_admin_plan_feature_path(@plan.id,feature.id), class: 'btn btn-warning' %>
+      <%= link_to 'Delete Feature', admin_plan_feature_path(@plan.id,feature.id),
+                  method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
     </div>  
   </li>
-
 </ul>

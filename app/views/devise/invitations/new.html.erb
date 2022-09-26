@@ -6,7 +6,7 @@
   <% resource.class.invite_key_fields.each do |field| -%>
       <%= f.input :name %>
       <%= f.input field , class: 'mt-2' %>
-      <p  class='mt-4 font-bold'>Role: <%= f.select :role, options_for_select(User.roles.keys.values_at(1)) %><p>
+      <p  class='mt-4 font-bold'>Role: <%= f.select :role, options_for_select(User::ROLES.values_at(1)) %><p>
   <% end %>
 
   <div class="form-actions">
