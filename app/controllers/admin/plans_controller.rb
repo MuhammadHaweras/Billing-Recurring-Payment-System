@@ -1,5 +1,4 @@
 class Admin::PlansController < Admin::AdminsController
-  protect_from_forgery with: :exception
   before_action :set_plan, only: %i[show edit update destroy]
   
   def index

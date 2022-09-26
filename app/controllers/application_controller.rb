@@ -3,12 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
-  def after_sign_in_path_for(resource)
-    return admin_plans_path if current_user.admin?
-    return buyer_users_path if current_user.buyer?
-  end
 
-  def after_accept_path_for(_resource)
+  def after_sign_in_path_for(resource)
     return admin_plans_path if current_user.admin?
     return buyer_users_path if current_user.buyer?
   end

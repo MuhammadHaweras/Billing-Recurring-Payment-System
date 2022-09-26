@@ -1,5 +1,4 @@
 class Admin::FeaturesController < Admin::AdminsController
-  protect_from_forgery with: :exception
   before_action :set_plan, only: %i[new edit create update destroy]
   before_action :set_feature, only: %i[edit update destroy]
 
