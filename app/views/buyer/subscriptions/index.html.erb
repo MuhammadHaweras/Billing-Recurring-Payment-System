@@ -1,0 +1,23 @@
+<h1 class='text-center text-primary my-4'>Your Subcriptions</h1>
+<table class='table table-bordered'>
+  <thead>
+    <tr class='table-secondary'>
+      <th scope="col">Subscription Name</th>
+       <th scope="col">Your Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @subscriptions.each do |subscription| %>
+    <tr>
+      <td><%= subscription.subscription_name %></td>
+      <td><%= current_user.name %></td>
+      <td><%= subscription.price %></td>
+
+      <td><%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete,
+                          class:'btn btn-danger', data: { confirm: 'Are you sure?'} %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

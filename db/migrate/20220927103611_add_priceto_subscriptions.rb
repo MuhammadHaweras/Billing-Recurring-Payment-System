@@ -1,0 +1,5 @@
+class AddPricetoSubscriptions < ActiveRecord::Migration[6.1]
+  def change
+    add_column :subscriptions, :price, :string
+  end
+end
