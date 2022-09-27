@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   
   namespace :buyer do
     resources :plans, only: %i[index show]
+    resources :subscriptions
   end  
 end
