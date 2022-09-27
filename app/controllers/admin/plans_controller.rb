@@ -13,9 +13,9 @@ class Admin::PlansController < Admin::AdminsController
     @plan = Plan.new(plan_params)
 
     if @plan.save 
-      redirect_to admin_plans_path, notice: 'Plan added!'    
+      redirect_to admin_plans_path
     else   
-      render 'new', error: 'Failed to edit plan!'      
+      render 'new'
     end   
   end
 

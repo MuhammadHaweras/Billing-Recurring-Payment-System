@@ -1,0 +1,13 @@
+<h1 class='text-center text-primary mt-2'>All Plans</h1>
+<% @plans.each do |plan| %>
+  <div class='card my-4'>
+    <h5 class='card-header'><%= plan.plan_name %></h5>
+      <div class='card-body'>
+        <h5 class='card-title'><%= plan.monthly_fee %></h5>
+      </div>
+      <div>
+        <%= link_to 'View Details', buyer_plan_path(plan), class:'btn btn-primary m-2' %>
+        <%= link_to 'Subscribe', '#', class:'btn btn-warning m-2' %>
+      </div>
+  </div>
+<% end %>

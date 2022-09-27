@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   end   
   
   namespace :buyer do
-    resources :users
+    resources :plans, only: %i[index show]
   end  
 end

@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     return admin_plans_path if current_user.admin?
-    return buyer_users_path if current_user.buyer?
+    return buyer_plans_path if current_user.buyer?
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password, :role) }
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password, :role) }
-    devise_parameter_sanitizer.permit(:invite, keys: [:name,:role])
+    devise_parameter_sanitizer.permit(:invite, keys: [:name, :role])
   end
 end

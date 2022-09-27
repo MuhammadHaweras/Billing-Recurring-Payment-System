@@ -6,17 +6,15 @@ class Admin::FeaturesController < Admin::AdminsController
     @feature = @plan.features.new
   end
 
-  def edit
-    @feature = @plan.features.find(params[:id])
-  end 
+  def edit; end
 
   def create
     @feature = @plan.features.create(feature_params)
 
     if @feature.save
-      redirect_to admin_plan_path(@plan), notice: 'Feature added!'
+      redirect_to admin_plan_path(@plan)
     else   
-      render 'new', error: 'Failed to edit feature!'  
+      render 'new'
     end  
   end
 
