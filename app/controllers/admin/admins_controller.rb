@@ -4,6 +4,6 @@ class Admin::AdminsController < ApplicationController
   protected
   
   def authorize_admin
-    return redirect_to buyer_users_path unless current_user.admin?
+    return redirect_to buyer_plans_path unless current_user.admin?
   end
 end	

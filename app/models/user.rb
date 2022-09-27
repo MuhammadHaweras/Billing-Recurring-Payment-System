@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   enum role: ROLES
 
+  has_one_attached :avatar
   has_many :subscriptions
   has_many :plans, through: :subscriptions
 end
