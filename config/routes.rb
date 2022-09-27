@@ -1,3 +1,14 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'welcome#index'
+  devise_for :users
+
+  namespace :admin do
+    resources :plans do
+      resources :features
+    end  
+  end   
+  
+  namespace :buyer do
+    resources :plans, only: %i[index show]
+  end  
 end

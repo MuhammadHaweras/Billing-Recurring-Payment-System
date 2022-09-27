@@ -1,0 +1,21 @@
+<div class='card my-2'>
+  <div class='card-header text-primary'>
+    <strong><%= @plan.plan_name %></strong>
+  </div>
+
+    <ul class='list-group list-group-flush'>
+      <li class='list-group-item text-success'>
+       <strong class='text-primary'>Price: </strong> <%= @plan.monthly_fee %> 
+      </li>
+      <li class='list-group-item'> <strong>Features:</strong> <%= render @plan.features %> </li>
+      <li class='list-group-item'>
+      <%= link_to 'Add Feature', new_admin_plan_feature_path(@plan), class: 'btn btn-success' %>
+      </li>
+      <li class='list-group-item'>
+        <div class='btn-group mr-2' role='group' aria-label='links'>
+          <%= link_to 'Edit', edit_admin_plan_path(@plan), class:'btn btn-primary' %>
+          <%= link_to 'Back', admin_plans_path, class:'btn btn-info' %>
+        </div>
+      </li>
+    </ul>
+</div>

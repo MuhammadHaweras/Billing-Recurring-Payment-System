@@ -1,0 +1,15 @@
+<h1 class='text-center text-primary mt-2'>All Plans</h1>
+<% @plans.each do |plan| %>
+  <div class='card my-4'>
+    <h5 class='card-header'><%= plan.plan_name %></h5>
+      <div class='card-body'>
+        <h5 class='card-title'><%= plan.monthly_fee %></h5>
+          <div class='btn-group mr-2' role='group' aria-label='links'>
+            <%= link_to 'Details', admin_plan_path(plan), class:'btn btn-primary' %>
+            <%= link_to 'Edit', edit_admin_plan_path(plan), class:'btn btn-info' %>
+            <%= link_to 'Destroy', admin_plan_path(plan), method: :delete,
+                               class:'btn btn-danger', data: { confirm: 'Are you sure?'} %>
+          </div>
+      </div>
+  </div>
+<% end %>  
