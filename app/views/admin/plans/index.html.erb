@@ -2,20 +2,20 @@
 <div class='container'>
   <div class='row'>
     <% @plans.each do |plan| %>
-      <div class='col-lg-4 col-sm-6 col-12'>
-        <div class='card my-4'>
-          <h5 class='card-header'><%= plan.plan_name %></h5>
-          <div class='card-body'>
+    <div class='col-lg-4 col-sm-6 col-12'>
+      <div class='card my-4'>
+        <h5 class='card-header'><%= plan.plan_name %></h5>
+        <div class='card-body'>
           <h5 class='card-title'><%= plan.monthly_fee %></h5>
-            <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
-              <%= link_to 'Details', admin_plan_path(plan), class:'btn btn-primary' %>
-              <%= link_to 'Edit', edit_admin_plan_path(plan), class:'btn btn-info' %>
-              <%= link_to 'Destroy', admin_plan_path(plan), method: :delete,
+          <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
+            <%= link_to 'Details', admin_plan_path(plan), class:'btn btn-primary' %>
+            <%= link_to 'Edit', edit_admin_plan_path(plan), class:'btn btn-info' %>
+            <%= link_to 'Destroy', admin_plan_path(plan), method: :delete,
                                class:'btn btn-danger', data: { confirm: 'Are you sure?'} %>
-            </div>
           </div>
         </div>
       </div>
-    <% end %>
+    </div>
+  <% end %>
   </div>
 </div>

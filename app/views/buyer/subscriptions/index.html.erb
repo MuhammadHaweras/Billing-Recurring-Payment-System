@@ -2,16 +2,18 @@
 <table class='table table-bordered'>
   <thead>
     <tr class='table-secondary'>
-      <th scope="col">Subscription Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Action</th>
+      <th scope='col'>Subscription Name</th>
+      <th scope='col'>Feature Usage</th>
+      <th scope='col'>Consume Unit</th>
+      <th scope='col'>Unsubscribe</th>
     </tr>
   </thead>
   <tbody>
     <% @subscriptions.each do |subscription| %>
     <tr>
       <td><%= subscription.subscription_name %></td>
-      <td><%= subscription.price %></td>
+      <td><%= subscription.consumed %> units</td>
+      <td><%= link_to 'Use Unit', increment_consumed_unit_buyer_subscription_path(subscription), method: :patch, class:'btn btn-primary', data: {confirm: 'You will charge for this unit! Are you sure?' }, remote: true %></td>
       <td><%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete,
                           class:'btn btn-danger', data: { confirm: 'Are you sure?'} %> </td>
     </tr>

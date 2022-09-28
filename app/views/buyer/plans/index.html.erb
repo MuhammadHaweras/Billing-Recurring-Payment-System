@@ -2,18 +2,18 @@
 <div class='container'>
   <div class='row'>
     <% @plans.each do |plan| %>
-      <div class='col-lg-4 col-sm-6 col-12'>
-        <div class='card my-4'>
-          <h5 class='card-header'><%= plan.plan_name %></h5>
-          <div class='card-body'>
-          <h5 class='card-title'><%= plan.monthly_fee %></h5>
-            <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
-              <%= link_to 'View Details', buyer_plan_path(plan), class:'btn btn-primary' %>
-              <%= render 'buyer/subscriptions/new', plan: plan, class:'btn btn-warning' %>
-            </div>
+    <div class='col-lg-4 col-sm-6 col-12'>
+      <div class='card my-4'>
+        <h5 class='card-header'><%= plan.plan_name %></h5>
+        <div class='card-body'>
+        <h5 class='card-title'><%= plan.monthly_fee %></h5>
+          <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
+            <%= link_to 'View Details', buyer_plan_path(plan), class:'btn btn-primary' %>
+            <%= render 'buyer/subscriptions/subsucribe', plan: plan, class:'btn btn-warning' %>
           </div>
         </div>
       </div>
+    </div>
     <% end %>
   </div>
 </div>

@@ -12,15 +12,14 @@
         <%= link_to 'All Plans', buyer_plans_path, class: 'btn btn-primary ml-2' %>
       </li>
       <li class='nav-item'>
-        <%= link_to 'My Subscriptions', buyer_subscriptions_path, class: 'btn btn-primary ml-2' %>
+        <%= link_to 'Usage Track', buyer_subscriptions_path, class: 'btn btn-primary ml-2' %>
       </li>
     </ul>
   </div>
-
   <div class='justify-content-end mx-4'>
     <% if current_user.avatar.attached? %>
       <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#exampleModal'>
-      <%= image_tag current_user.avatar, class: 'rounded-circle ', width: '50px', height: '50px' %>
+      <%= image_tag current_user.avatar, class: 'rounded-circle ', width: '40px', height: '40px' %>
       </button>
       <%= render 'shared/modal' %>
     <% end %>
