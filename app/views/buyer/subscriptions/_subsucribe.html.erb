@@ -1,2 +1,1 @@
-<%= link_to 'Subscribe', buyer_subscriptions_path(subscription: {subscription_name: plan.plan_name, price: plan.monthly_fee, user_id: current_user.id, plan_id: plan.id}), method: :create, class: 'btn btn-warning',data: { confirm: 'Are you sure? Plan price will be charged!'} %>
-
+<%= link_to 'Subscribe', buyer_subscriptions_path(subscription: {subscription_name: plan.plan_name, price: plan.monthly_fee, user_id: current_user.id, plan_id: plan.id }), method: :create, class: 'btn btn-warning',data: { confirm: 'Are you sure? Plan price will be charged!'} %>

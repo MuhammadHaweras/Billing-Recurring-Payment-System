@@ -39,6 +39,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_storage_validations (0.9.8)
+      activejob (>= 5.2.0)
+      activemodel (>= 5.2.0)
+      activestorage (>= 5.2.0)
+      activesupport (>= 5.2.0)
     activejob (6.1.7)
       activesupport (= 6.1.7)
       globalid (>= 0.3.6)
@@ -78,11 +83,8 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (4.1.0)
+    cocoon (1.2.15)
     concurrent-ruby (1.1.10)
-    countries (5.1.2)
-      sixarm_ruby_unaccent (~> 1.1)
-    country_select (8.0.0)
-      countries (~> 5.0)
     crass (1.0.6)
     devise (4.8.1)
       bcrypt (~> 3.0)
@@ -194,7 +196,6 @@ GEM
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
-    sixarm_ruby_unaccent (1.2.0)
     spring (4.0.0)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -239,10 +240,11 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
+  active_storage_validations
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
-  country_select
+  cocoon
   devise
   devise_invitable (~> 2.0.0)
   jbuilder (~> 2.7)

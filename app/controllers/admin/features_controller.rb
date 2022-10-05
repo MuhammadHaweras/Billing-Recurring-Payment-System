@@ -1,18 +1,23 @@
 class Admin::FeaturesController < Admin::AdminsController
-  before_action :set_plan, only: %i[new edit create update destroy]
-  before_action :set_feature, only: %i[edit update destroy]
+  before_action :set_feature, only: %i[show edit update destroy]
+
+  def index
+    @features = Feature.all
+  end
+
+  def show; end
 
   def new
-    @feature = @plan.features.new
+    @feature = Feature.new
   end
 
   def edit; end
 
   def create
-    @feature = @plan.features.create(feature_params)
+    @feature = Feature.create(feature_params)
 
     if @feature.save
-      redirect_to admin_plan_path(@plan)
+      redirect_to admin_features_path
     else   
       render 'new'
     end  
@@ -20,7 +25,7 @@ class Admin::FeaturesController < Admin::AdminsController
 
   def update
     if @feature.update(feature_params)
-      redirect_to admin_plan_path(@plan)
+      redirect_to admin_feature_path(@feature)
     else
       render 'edit'
     end
@@ -28,20 +33,16 @@ class Admin::FeaturesController < Admin::AdminsController
 
   def destroy
     @feature.destroy
-    redirect_to admin_plan_path(@plan)
+    redirect_to admin_features_path
   end
 
   private
 
-  def set_plan
-    @plan = Plan.find(params[:plan_id])
-  end
-
   def set_feature
-    @feature = @plan.features.find(params[:id])
+    @feature = Feature.find(params[:id])
   end
 
   def feature_params
-    params.require(:feature).permit(:feature_name, :code, :unit_price, :max_unit_limit, :plan_id)
+    params.require(:feature).permit(:feature_name, :code, :unit_price, :max_unit_limit)
   end
 end  

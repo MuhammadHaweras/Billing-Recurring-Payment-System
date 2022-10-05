@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { invitations: 'users/invitations' }
 
   namespace :admin do
-    resources :plans do
-      resources :features
-    end  
+    resources :plans
+    resources :features
+    resources :usage
+    resources :payments
   end   
   
   namespace :buyer do

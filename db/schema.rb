@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_28_111049) do
+ActiveRecord::Schema.define(version: 2022_10_05_064151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 2022_09_28_111049) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "feature_plans", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "feature_id", null: false
+    t.index ["feature_id"], name: "index_feature_plans_on_feature_id"
+    t.index ["plan_id"], name: "index_feature_plans_on_plan_id"
+  end
+
   create_table "features", force: :cascade do |t|
     t.string "feature_name"
     t.string "code"
@@ -50,13 +59,19 @@ ActiveRecord::Schema.define(version: 2022_09_28_111049) do
     t.integer "max_unit_limit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "plan_id", null: false
-    t.index ["plan_id"], name: "index_features_on_plan_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "total_bill"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "plans", force: :cascade do |t|
     t.string "plan_name"
-    t.string "monthly_fee"
+    t.decimal "monthly_fee"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -67,9 +82,11 @@ ActiveRecord::Schema.define(version: 2022_09_28_111049) do
     t.bigint "plan_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "price"
+    t.decimal "price"
     t.integer "consumed", default: 0
     t.integer "max_unit_limit"
+    t.bigint "feature_id", null: false
+    t.index ["feature_id"], name: "index_subscriptions_on_feature_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
@@ -101,5 +118,8 @@ ActiveRecord::Schema.define(version: 2022_09_28_111049) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "features", "plans"
+  add_foreign_key "feature_plans", "features"
+  add_foreign_key "feature_plans", "plans"
+  add_foreign_key "payments", "users"
+  add_foreign_key "subscriptions", "features"
 end

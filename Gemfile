@@ -56,6 +56,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'simple_form'
 gem 'devise'
-gem 'country_select'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'net-smtp', require: false
+gem 'cocoon'
+gem 'active_storage_validations'

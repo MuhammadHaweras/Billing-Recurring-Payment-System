@@ -1,0 +1,29 @@
+<h1 class='text-center text-primary mt-2'>Existing Features</h1>
+<div class='container'>
+  <div class='row'>
+    <% @features.each do |feature| %>
+      <div class='col-lg-4 col-sm-6 col-12'>
+        <div class='card my-4'>
+        <h5 class='card-header'><%= feature.feature_name %></h5>
+          <div class='card-body'>
+            <ul class='list-group'>
+              <li class='list-group-item'>
+                <strong class='text-primary'>Code: </strong> <%= feature.code %></li>
+              <li class='list-group-item'>
+               <strong class='text-primary'>Unit Price: </strong> <%= feature.unit_price %>$</li>
+              <li class='list-group-item'>
+                <strong class='text-primary'>Max Unit Limit: </strong><%= feature.max_unit_limit %>
+              </li>
+            </ul>
+            <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
+              <%= link_to 'Details', admin_feature_path(feature), class:'btn btn-primary' %>
+              <%= link_to 'Edit', edit_admin_feature_path(feature), class:'btn btn-info' %>
+              <%= link_to 'Destroy', admin_feature_path(feature), method: :delete,
+                               class:'btn btn-danger', data: { confirm: 'Are you sure?'} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

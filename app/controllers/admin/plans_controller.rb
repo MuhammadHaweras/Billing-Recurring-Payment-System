@@ -10,11 +10,11 @@ class Admin::PlansController < Admin::AdminsController
   end  
 
   def create
-    @plan = Plan.new(plan_params)
+    @plan = Plan.create(plan_params)
 
     if @plan.save 
       redirect_to admin_plans_path
-    else   
+    else
       render 'new'
     end   
   end
@@ -37,7 +37,7 @@ class Admin::PlansController < Admin::AdminsController
   private
 
   def plan_params
-    params.require(:plan).permit(:plan_name, :monthly_fee)
+    params.require(:plan).permit(:id, :plan_name, :monthly_fee, feature_plans_attributes: [:id, :plan_id, :feature_id, :allocated_units, :_destroy])
   end
 
   def set_plan
