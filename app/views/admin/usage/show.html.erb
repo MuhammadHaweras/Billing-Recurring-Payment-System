@@ -8,7 +8,7 @@
       <strong class='text-primary'>Price: </strong> <%= Plan.find(plan).monthly_fee %>$
     </li>
       <% Plan.find(plan).features.each do |feature| %>
-        <% subscription = subscription_feature(plan,feature) %>
+        <% subscription = subscription_feature(@user.id, plan, feature.id) %>
         <ul class='list-group'>
           <li class='list-group-item'>
             <strong class='text-primary'>Feature Name: </strong> <%= feature.feature_name %>
@@ -25,9 +25,7 @@
         </ul>
       <% end %>
   </ul>
-  <br>
   <hr class='border border-primary border-3'>
-  <br>
 <% end %>
 <div class='mb-3'>
   <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-success'%>

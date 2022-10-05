@@ -19,7 +19,7 @@
   <div class='justify-content-end mx-4'>
     <% if current_user.avatar.attached? %>
       <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#exampleModal'>
-      <%= image_tag current_user.avatar, class: 'rounded-circle ', width: '40px', height: '40px' %>
+        <%= image_tag current_user.avatar, class: 'rounded-circle ', width: '40px', height: '40px' %>
       </button>
       <%= render 'shared/modal' %>
     <% end %>

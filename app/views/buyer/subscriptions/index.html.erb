@@ -2,10 +2,10 @@
 <% user_plans = user_plan %>
 <% user_plans.each do |plan| %>
   <ul class='list-group'>
-    <li class="list-group-item">
+    <li class='list-group-item'>
       <strong class='text-primary'>Subscription Name: </strong> <%= Plan.find(plan).plan_name %>
     </li>
-    <li class="list-group-item">
+    <li class='list-group-item'>
       <strong class='text-primary'>Price: </strong> <%= Plan.find(plan).monthly_fee %>$
     </li>
     <li class='list-group-item'>
@@ -28,7 +28,7 @@
           <strong class='text-primary'>Consumed Units: </strong> <%= subscription.consumed %>
         </li>
         <li class='list-group-item'>
-          <%= link_to 'Consume Unit', increment_consumed_unit_buyer_subscription_path(subscription), method: :patch, class:'btn btn-success' %>
+          <%= link_to 'Consume Unit', increment_consumed_unit_buyer_subscription_path(subscription), method: :patch, class:'btn btn-success consume' %>
         </li>
       </ul>
     <% end %>
@@ -39,8 +39,13 @@
 <% end %>
 <div class='mb-3'>
   <% if @bill %>
-    <h5 class='text-danger text-center'> Your Bill is: <%= @bill.total_bill %>$
-      <%= link_to 'Pay Now', '#', class: 'btn btn-success' %>
-    </h5>
+    <h5 class='text-danger text-center'> Your Bill is: <%= @bill.total_bill %>$ </h5>
   <% end %>
 </div>
+<p class='text-center'>
+<button type='button' class='btn btn-lg btn-warning mb-4' data-bs-toggle='modal' data-bs-target='#invoice'>
+  View Invoice
+</button>
+</p>
+<%= render 'shared/invoice' %>
+

@@ -1,0 +1,42 @@
+<div class='modal fade' id='invoice' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='exampleModalLabel'> Bill Details</h5>
+        <button type='button' class='btn-close text-center' data-bs-dismiss='modal' aria-label='Close'></button>
+      </div>
+      <div class='modal-body'>
+        <% @plans = User.find(current_user.id).plans.pluck(:plan_id).uniq %>
+        <% @plans.each do |plan| %>
+          <% @plan = Plan.find(plan) %>
+          <ul class='list-group'>
+            <li class='list-group-item'><strong> Plan: </strong> <%= @plan.plan_name %> </li>
+            <li class='list-group-item'> <strong> Price: </strong>  <%= @plan.monthly_fee %> </li>
+            <p class='fw-bold mt-2 ms-2'> Feature(s): </p>
+            <% @plan.features.each do |feature| %>
+              <% consumed = Subscription.where(user_id: current_user.id).where(plan_id: plan).where(feature_id:feature.id).first.consumed %>
+              <li class='list-group-item'><%= feature.feature_name %></li>
+              <% if consumed - feature.max_unit_limit > 0 %>
+                <li class='list-group-item'>
+                  <strong class='ms-4'>Unit Exceeded: </strong> <%= consumed - feature.max_unit_limit %>
+                </li>
+                <li class='list-group-item'>
+                  <strong class='ms-4'> Exceed units price: </strong>
+                  <%= (consumed - feature.max_unit_limit) * feature.unit_price %>
+                </li>
+              <% end %>
+
+            <% end %>
+          </ul>
+          <hr class='border border-success border-2'>
+        <% end %>
+        <p class='text-center mt-2'>
+          <strong class='text-success'>Total Bill: </strong><%= @bill.total_bill %>$</li>
+        </p>
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
