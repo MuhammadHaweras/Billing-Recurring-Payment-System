@@ -6,36 +6,48 @@
         <button type='button' class='btn-close text-center' data-bs-dismiss='modal' aria-label='Close'></button>
       </div>
       <div class='modal-body'>
-        <% @plans = User.find(current_user.id).plans.pluck(:plan_id).uniq %>
-        <% @plans.each do |plan| %>
-          <% @plan = Plan.find(plan) %>
-          <ul class='list-group'>
-            <li class='list-group-item'><strong> Plan: </strong> <%= @plan.plan_name %> </li>
-            <li class='list-group-item'> <strong> Price: </strong>  <%= @plan.monthly_fee %> </li>
-            <p class='fw-bold mt-2 ms-2'> Feature(s): </p>
-            <% @plan.features.each do |feature| %>
-              <% consumed = Subscription.where(user_id: current_user.id).where(plan_id: plan).where(feature_id:feature.id).first.consumed %>
-              <li class='list-group-item'><%= feature.feature_name %></li>
-              <% if consumed - feature.max_unit_limit > 0 %>
+        <ul class='list-group'>
+          <% @subscriptions.each do |subscription| %>
+            <li class='list-group-item'>
+              <strong class='text-primary'>Subscription Name: </strong>
+              <%= subscription.subscription_name %>
+            </li>
+            <li class='list-group-item'>
+              Price: <%= subscription.price %>$
+            </li>
+            <li class='list-group-item'>
+              <strong class='text-success'>Feature(s): </strong>
+            </li>
+            <% subscription.plan.feature_plans.each do |feature_plan| %>
+              <li class='list-group-item'>
+                <%= feature_plan.feature.feature_name %>
+              </li>
+              <li class='list-group-item'>
+                <p class='ms-2 mb-0'>Unit Price: <%= feature_plan.feature.unit_price %>$ </p>
+              </li>
+              <% consume_feature = get_consume_feature(subscription.consume_features, feature_plan.feature.id) %>
+              <% if consume_feature && consume_feature.consume_units - feature_plan.feature.max_unit_limit > 0 %>
                 <li class='list-group-item'>
-                  <strong class='ms-4'>Unit Exceeded: </strong> <%= consumed - feature.max_unit_limit %>
+                  <strong class='text-danger ms-4'> Exceed Units: </strong>
+                  <%= consume_feature.consume_units - feature_plan.feature.max_unit_limit %>
                 </li>
                 <li class='list-group-item'>
-                  <strong class='ms-4'> Exceed units price: </strong>
-                  <%= (consumed - feature.max_unit_limit) * feature.unit_price %>
+                  <strong class='text-danger ms-4'> Exceed Units Price: </strong>
+                  <%= (consume_feature.consume_units - feature_plan.feature.max_unit_limit) * feature_plan.feature.unit_price %>$
                 </li>
               <% end %>
-
             <% end %>
-          </ul>
-          <hr class='border border-success border-2'>
-        <% end %>
+            <hr class='border border-success border-2 mb-4'>
+          <% end %>
+        </ul>
         <p class='text-center mt-2'>
           <strong class='text-success'>Total Bill: </strong><%= @bill.total_bill %>$</li>
         </p>
       </div>
       <div class='modal-footer'>
         <button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Close</button>
+        <%  @payment = Payment.where(user_id: current_user.id).last %>
+        <%= link_to 'Pay Now', payment_status_buyer_payment_path(@payment), method: :patch, class:'btn btn-success' %>
       </div>
     </div>
   </div>

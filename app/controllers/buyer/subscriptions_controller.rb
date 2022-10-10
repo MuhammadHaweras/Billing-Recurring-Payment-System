@@ -1,28 +1,19 @@
 class Buyer::SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: :increment_consumed_unit
+  before_action :set_subscription, only: :destroy
 
   def index
-    @subscriptions = Subscription.all
-    @bill = Payment.where(user_id: current_user.id).last
-  end
-
-  def increment_consumed_unit
-    @subscription.increment!(:consumed)
-    redirect_to buyer_subscriptions_path, notice: 'Unit consumed for this subscription!'
+    @subscriptions = current_user.subscriptions.includes(:consume_features, plan: [feature_plans: [:feature]])
+    @bill = current_user.payments.last
   end
 
   def create
-    plan = Plan.find(subscription_params[:plan_id])
-    plan.features.each do |feature|
-      @subscription = Subscription.create!(subscription_params.merge(feature_id: feature.id))
-    end
-    redirect_to buyer_subscriptions_path
+    @subscription = Subscription.create!(subscription_params)
+    redirect_to buyer_subscriptions_path, notice: 'Plan subscribed successfully!'
   end
 
   def destroy
-    @subscriptions = Subscription.where(user_id: current_user.id).where(plan_id: params[:id])
-    @subscriptions.destroy_all
-    redirect_to buyer_plans_path
+    @subscription.destroy
+    redirect_to buyer_plans_path, notice: 'Plan successfully unsubscribed.'
   end
 
   private
@@ -32,6 +23,6 @@ class Buyer::SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.require(:subscription).permit(:subscription_name, :price, :consumed, :user_id, :plan_id, :feature_id)
+    params.require(:subscription).permit(:subscription_name, :price, :user_id, :plan_id)
   end
 end

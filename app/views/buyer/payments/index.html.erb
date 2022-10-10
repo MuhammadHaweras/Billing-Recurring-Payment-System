@@ -1,0 +1,19 @@
+<h2 class='text-success text-center my-3'> Previous Payments</h2>
+<table class='table table-bordered table-hover table-sm my-4'>
+  <thead class='table-light'>
+    <tr>
+      <th class='scope'>Amount</th>
+      <th class='scope'>Paid at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment_bill|  %>
+      <% if payment_bill.payment? %>
+        <tr>
+          <td> <%= payment_bill.total_bill %>$ </td>
+          <td> <%= payment_bill.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

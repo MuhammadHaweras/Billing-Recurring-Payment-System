@@ -1,51 +1,58 @@
-<h1 class='text-center text-primary'>Subscriped Plans: </h1>
-<% user_plans = user_plan %>
-<% user_plans.each do |plan| %>
-  <ul class='list-group'>
+<h1 class='text-center text-info my-4'> Your Subscriptions </h1>
+<ul class='list-group'>
+  <% @subscriptions.each do |subscription| %>
     <li class='list-group-item'>
-      <strong class='text-primary'>Subscription Name: </strong> <%= Plan.find(plan).plan_name %>
+      <strong class='text-primary'>Subscription Name: </strong>
+      <%= subscription.subscription_name %>
     </li>
     <li class='list-group-item'>
-      <strong class='text-primary'>Price: </strong> <%= Plan.find(plan).monthly_fee %>$
+      <strong class='text-primary'>Price: </strong> <%= subscription.price %>$
     </li>
     <li class='list-group-item'>
-      <%= link_to 'Unsubscribe', buyer_subscription_path(plan), method: :delete,
-                                    data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
     </li>
-    <% Plan.find(plan).features.each do |feature| %>
-      <% subscription = user_subscriptions(plan,feature) %>
-      <ul class='list-group'>
-        <li class='list-group-item'>
-          <strong class='text-primary'>Feature Name: </strong> <%= feature.feature_name %>
+    <% subscription.plan.feature_plans.each do |feature_plan| %>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Feature Name: </strong>
+        <%= feature_plan.feature.feature_name %>
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Unit Price: </strong> <%= feature_plan.feature.unit_price %>$
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Max Unit Limit: </strong>
+        <%= feature_plan.feature.max_unit_limit %>
+      </li>
+      <% consume_feature = get_consume_feature(subscription.consume_features, feature_plan.feature.id) %>
+      <% if consume_feature %>
+        <li class='list-group-item d-flex flex-row'>
+          <strong class='text-primary '>Consumed Units: </strong>
+          <div id='consume-<%= "#{feature_plan.feature.id}" %>' class ='consume ms-1' >
+          <%= consume_feature.consume_units %></div>
         </li>
-        <li class='list-group-item'>
-          <strong class='text-primary'>Unit Price: </strong> <%= feature.unit_price %>$
+        <li class='list-group-item d-none message'>
+          <div class='alert alert-success' role='alert'>
+            Unit consumed for this feature!
+          </div>
         </li>
+      <% else %>
         <li class='list-group-item'>
-          <strong class='text-primary'>Max Unit Limit: </strong> <%= feature.max_unit_limit %>
+          <strong class='text-primary'>Consumed Units: </strong> 0
         </li>
-        <li class='list-group-item'>
-          <strong class='text-primary'>Consumed Units: </strong> <%= subscription.consumed %>
-        </li>
-        <li class='list-group-item'>
-          <%= link_to 'Consume Unit', increment_consumed_unit_buyer_subscription_path(subscription), method: :patch, class:'btn btn-success consume' %>
-        </li>
-      </ul>
+      <% end %>
+      <li class='list-group-item'>
+        <%= link_to 'Consume Unit', increment_consumed_unit_buyer_consume_feature_path(feature_plan.feature.id, cosume_feature: {feature_id: feature_plan.feature.id, subscription_id: subscription.id}), method: :patch, class: 'btn btn-success', remote: true %>
     <% end %>
-  </ul>
-  <br>
-  <hr class='border border-primary border-3'>
-  <br>
-<% end %>
+    <hr class='border border-success border-2 mb-4'>
+  <% end %>
+</ul>
 <div class='mb-3'>
   <% if @bill %>
-    <h5 class='text-danger text-center'> Your Bill is: <%= @bill.total_bill %>$ </h5>
+    <h5 class='text-danger ms-4'> Your Bill is: <%= @bill.total_bill %>$
+      <button type='button' class='btn  btn-warning my-4 ms-3' data-bs-toggle='modal' data-bs-target='#invoice'>
+        View Invoice
+      </button>
+      <%= render 'shared/invoice' %>
+    </h5>
   <% end %>
 </div>
-<p class='text-center'>
-<button type='button' class='btn btn-lg btn-warning mb-4' data-bs-toggle='modal' data-bs-target='#invoice'>
-  View Invoice
-</button>
-</p>
-<%= render 'shared/invoice' %>
-

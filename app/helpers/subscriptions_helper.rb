@@ -1,10 +1,5 @@
 module SubscriptionsHelper
-   def user_plan
-     @subscriptions.where(user_id: current_user.id).pluck(:plan_id).uniq
-   end
-
-  def user_subscriptions(plan,feature)
-    Subscription.where(user_id: current_user.id).where(plan_id: plan)
-                                                .where(feature_id: feature.id).first
+  def get_consume_feature(consume_features, feature_id)
+    consume_features.find { |consume_feature| consume_feature.feature_id == feature_id }
   end
 end

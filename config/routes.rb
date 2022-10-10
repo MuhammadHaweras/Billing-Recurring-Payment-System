@@ -11,10 +11,17 @@ Rails.application.routes.draw do
   
   namespace :buyer do
     resources :plans, only: %i[index show]
-      resources :subscriptions do
-        member do
-          patch :increment_consumed_unit
-        end
+    resources :subscriptions
+    resources :consume_features do
+      member do
+        patch :increment_consumed_unit
       end
+    end
+
+    resources :payments do
+      member do
+        patch :payment_status
+      end
+    end
   end
 end

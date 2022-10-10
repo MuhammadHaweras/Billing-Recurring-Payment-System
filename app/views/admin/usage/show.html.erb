@@ -1,37 +1,47 @@
-<h1 class='text-center text-primary mt-2'>Subscribed Plans</h1>
-<% @subscriptions.each do |plan| %>
+<h1 class='text-center text-primary my-2'>Subscribed Plans</h1>
+<% if @bill.payment? %>
+  <h3> <span class="badge rounded-pill bg-success">Paid</span> </h3>
+<% else %>
+  <h3> <span class="badge rounded-pill bg-danger">Not Paid</span> </h3>
+<% end %>
+<% @subscriptions.each do |subscription| %>
   <ul class='list-group'>
     <li class='list-group-item'>
-      <strong class='text-primary'>Subscription Name: </strong><%= Plan.find(plan).plan_name %>
+      <strong class='text-primary'>Subscription Name: </strong>
+      <%= subscription.subscription_name %>
     </li>
-    <li class="list-group-item">
-      <strong class='text-primary'>Price: </strong> <%= Plan.find(plan).monthly_fee %>$
+    <li class='list-group-item'>
+      <strong class='text-primary'>Monthly Fee: </strong> <%= subscription.price %>$
     </li>
-      <% Plan.find(plan).features.each do |feature| %>
-        <% subscription = subscription_feature(@user.id, plan, feature.id) %>
-        <ul class='list-group'>
-          <li class='list-group-item'>
-            <strong class='text-primary'>Feature Name: </strong> <%= feature.feature_name %>
-          </li>
-          <li class='list-group-item'>
-            <strong class='text-primary'>Unit Price: </strong> <%= feature.unit_price %>$
-          </li>
-          <li class='list-group-item'>
-            <strong class='text-primary'>Max Unit Limit: </strong> <%= feature.max_unit_limit %>
-          </li>
-          <li class='list-group-item'>
-            <strong class='text-primary'>Consumed Units: </strong> <%= subscription.consumed %>
-          </li>
-        </ul>
+    <% subscription.plan.feature_plans.each do |feature_plan| %>
+      <li class='list-group-item'>
+        <strong class='text-primary'> Feature Name: </strong>
+        <%= feature_plan.feature.feature_name %>
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'> Unit Price: </strong>
+        <%= feature_plan.feature.unit_price %>$
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'> Max Unit Limit: </strong>
+        <%= feature_plan.feature.max_unit_limit %>
+      </li>
+      <% consume_feature = get_consume_feature(subscription.consume_features, feature_plan.feature.id) %>
+      <% if consume_feature %>
+        <li class='list-group-item'>
+          <strong class='text-primary'> Unit Cosnsumed: </strong>
+          <%= consume_feature.consume_units %>
+        </li>
       <% end %>
-  </ul>
-  <hr class='border border-primary border-3'>
-<% end %>
-<div class='mb-3'>
-  <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-success'%>
-  <p class='my-2'>
-    <% if @bill %>
-     <h5>Total Bill: <%= @bill.total_bill %>$ </h5>
     <% end %>
-  </p>
+  </ul>
+  <hr class='border border-success border-3'>
+<% end %>
+<div class='my-3'>
+   <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-success'%>
 </div>
+<% if @bill %>
+  <p class='text-center mt-2'>
+    <strong class='text-success'>Total Bill: </strong><%= @bill.total_bill %>$</li>
+  </p>
+<% end %>

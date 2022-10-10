@@ -1,17 +1,16 @@
 class Payment < ApplicationRecord
   belongs_to :user
 
-  def self.total_payment(user_id)
+  def self.total_payment(user)
     total = 0
-    plans = User.find(user_id).plans.pluck(:plan_id).uniq
-    plans.each do |plan|
-      plan = Plan.find(plan)
-      total += plan.monthly_fee
-      plan.features.each do |feature|
-        consumed = Subscription.where(user_id: user_id).where(plan_id: plan).where(feature_id:feature.id).first.consumed
-        max_units = feature.max_unit_limit
+    User.find(user).subscriptions.each do |subscription|
+      total += subscription.price
+      subscription.plan.feature_plans.each do |feature_plan|
+        max_units = feature_plan.feature.max_unit_limit
+        get_consumed = subscription.consume_features.find { |consume_feature| consume_feature.feature_id == feature_plan.feature.id }
+        get_consumed ? consumed = get_consumed.consume_units : consumed = 0
         difference = consumed - max_units
-        return  total += difference * Feature.find(feature.id).unit_price if difference > 0
+        total += difference * feature_plan.feature.unit_price if difference > 0
       end
     end
     total

@@ -1,0 +1,9 @@
+alert('Hi');
+var consumed = document.querySelectorAll('.consume')
+/*var message = document.querySelector('.message') */
+
+consumed.forEach(c =>{
+  c.innerHTML = '<%= @consume_unit.consume_units %>'
+})
+
+/*message.classList.remove('d-none') */

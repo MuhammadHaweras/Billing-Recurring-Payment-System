@@ -3,5 +3,5 @@ class Feature < ApplicationRecord
 
   has_many :feature_plans, dependent: :destroy
   has_many :plans, through: :feature_plans
-  has_many :consume_units
+  has_many :consume_features
 end

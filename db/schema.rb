@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_05_064151) do
+ActiveRecord::Schema.define(version: 2022_10_06_162258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,22 @@ ActiveRecord::Schema.define(version: 2022_10_05_064151) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "consume_features", force: :cascade do |t|
+    t.bigint "subscription_id", null: false
+    t.bigint "feature_id", null: false
+    t.integer "consume_units", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_id"], name: "index_consume_features_on_feature_id"
+    t.index ["subscription_id"], name: "index_consume_features_on_subscription_id"
+  end
+
   create_table "feature_plans", force: :cascade do |t|
     t.bigint "plan_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "feature_id", null: false
+    t.integer "unit_consumed", default: 0
     t.index ["feature_id"], name: "index_feature_plans_on_feature_id"
     t.index ["plan_id"], name: "index_feature_plans_on_plan_id"
   end
@@ -66,6 +77,7 @@ ActiveRecord::Schema.define(version: 2022_10_05_064151) do
     t.integer "total_bill"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "payment", default: false
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -83,10 +95,7 @@ ActiveRecord::Schema.define(version: 2022_10_05_064151) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "price"
-    t.integer "consumed", default: 0
     t.integer "max_unit_limit"
-    t.bigint "feature_id", null: false
-    t.index ["feature_id"], name: "index_subscriptions_on_feature_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
@@ -118,8 +127,9 @@ ActiveRecord::Schema.define(version: 2022_10_05_064151) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "consume_features", "features"
+  add_foreign_key "consume_features", "subscriptions"
   add_foreign_key "feature_plans", "features"
   add_foreign_key "feature_plans", "plans"
   add_foreign_key "payments", "users"
-  add_foreign_key "subscriptions", "features"
 end
