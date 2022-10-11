@@ -4,7 +4,6 @@ class Buyer::ConsumeFeaturesController < ApplicationController
     @consume_unit = ConsumeFeature.find_or_create_by(consume_feature_params)
     @consume_unit.increment!(:consume_units)
     respond_to do |format|
-      format.html { redirect_to buyer_subscriptions_path, notice: 'Unit Consumed for this feature!' }
       format.js
     end
   end

@@ -27,12 +27,17 @@
       <% if consume_feature %>
         <li class='list-group-item d-flex flex-row'>
           <strong class='text-primary '>Consumed Units: </strong>
-          <div id='consume-<%= "#{feature_plan.feature.id}" %>' class ='consume ms-1' >
+          <div id='consume-<%=feature_plan.feature.id%>' class ='ms-1'>
           <%= consume_feature.consume_units %></div>
         </li>
-        <li class='list-group-item d-none message'>
+        <li class='list-group-item d-none message-<%=feature_plan.feature.id%>'>
           <div class='alert alert-success' role='alert'>
             Unit consumed for this feature!
+          </div>
+        </li>
+        <li class='list-group-item d-none error-<%=feature_plan.feature.id%>'>
+          <div class='alert alert-danger' role='alert'>
+            Error! Couldn't consume this feature!
           </div>
         </li>
       <% else %>

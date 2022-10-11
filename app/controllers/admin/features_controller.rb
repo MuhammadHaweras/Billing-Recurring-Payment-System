@@ -45,4 +45,4 @@ class Admin::FeaturesController < Admin::AdminsController
   def feature_params
     params.require(:feature).permit(:feature_name, :code, :unit_price, :max_unit_limit)
   end
-end  
+end
