@@ -18,22 +18,20 @@
             <li class='list-group-item'>
               <strong class='text-success'>Feature(s): </strong>
             </li>
-            <% subscription.plan.feature_plans.each do |feature_plan| %>
+            <% subscription.plan.features.each do |feature| %>
+              <li class='list-group-item'> <%= feature.feature_name %> </li>
               <li class='list-group-item'>
-                <%= feature_plan.feature.feature_name %>
+                <p class='ms-2 mb-0'>Unit Price: <%= feature.unit_price %>$ </p>
               </li>
-              <li class='list-group-item'>
-                <p class='ms-2 mb-0'>Unit Price: <%= feature_plan.feature.unit_price %>$ </p>
-              </li>
-              <% consume_feature = get_consume_feature(subscription.consume_features, feature_plan.feature.id) %>
-              <% if consume_feature && consume_feature.consume_units - feature_plan.feature.max_unit_limit > 0 %>
+              <% consume_feature = get_consume_feature(subscription.consume_features, feature.id) %>
+              <% if consume_feature && consume_feature.consume_units - feature.max_unit_limit > 0 %>
                 <li class='list-group-item'>
                   <strong class='text-danger ms-4'> Exceed Units: </strong>
-                  <%= consume_feature.consume_units - feature_plan.feature.max_unit_limit %>
+                  <%= consume_feature.consume_units - feature.max_unit_limit %>
                 </li>
                 <li class='list-group-item'>
                   <strong class='text-danger ms-4'> Exceed Units Price: </strong>
-                  <%= (consume_feature.consume_units - feature_plan.feature.max_unit_limit) * feature_plan.feature.unit_price %>$
+                  <%= (consume_feature.consume_units - feature.max_unit_limit) * feature.unit_price %>$
                 </li>
               <% end %>
             <% end %>
