@@ -1,7 +1,6 @@
 class Api::V1::SessionsController < Api::ApiController
-  respond_to :json
-     skip_before_action :verify_authenticity_token
-     before_action :ensure_params_exist, only: [:create]
+  skip_before_action :verify_authenticity_token
+  before_action :ensure_user, only: :create
 
   def create
     resource = User.find_for_database_authentication(email: params[:user][:email])
@@ -25,7 +24,7 @@ class Api::V1::SessionsController < Api::ApiController
 
   protected
 
-  def ensure_params_exist
+  def ensure_user
     return unless params[:user].blank?
     render json: {status: 'failed', message: 'Missing User Parameter'}
   end

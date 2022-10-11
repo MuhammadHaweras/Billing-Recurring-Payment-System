@@ -1,5 +1,4 @@
 class Api::V1::RegistrationsController < Api::ApiController
-  respond_to :json
   skip_before_action :verify_authenticity_token
   before_action :check_user, only: :create
 

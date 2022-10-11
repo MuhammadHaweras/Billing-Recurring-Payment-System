@@ -4,8 +4,8 @@ class Admin::UsageController < Admin::AdminsController
   end
 
   def show
-    @user = User.buyer.find(params[:id])
-    @subscriptions = @user.subscriptions.includes(:consume_features, plan: [feature_plans: [:feature]])
-    @bill = Payment.where(user_id: @user.id).last
+    @buyer = User.buyer.find(params[:id])
+    @subscriptions = @buyer.subscriptions.includes(:consume_features, plan: [feature_plans: [:feature]])
+    @bill = Payment.where(user_id: @buyer.id).last
   end
 end

@@ -13,20 +13,18 @@
     <li class='list-group-item'>
       <strong class='text-primary'>Monthly Fee: </strong> <%= subscription.price %>$
     </li>
-    <% subscription.plan.feature_plans.each do |feature_plan| %>
+    <% subscription.plan.features.each do |feature| %>
       <li class='list-group-item'>
-        <strong class='text-primary'> Feature Name: </strong>
-        <%= feature_plan.feature.feature_name %>
+        <strong class='text-primary'> Feature Name: </strong> <%= feature.feature_name %>
       </li>
       <li class='list-group-item'>
-        <strong class='text-primary'> Unit Price: </strong>
-        <%= feature_plan.feature.unit_price %>$
+        <strong class='text-primary'> Unit Price: </strong> <%= feature.unit_price %>$
       </li>
       <li class='list-group-item'>
         <strong class='text-primary'> Max Unit Limit: </strong>
-        <%= feature_plan.feature.max_unit_limit %>
+         <%= feature.max_unit_limit %>
       </li>
-      <% consume_feature = get_consume_feature(subscription.consume_features, feature_plan.feature.id) %>
+      <% consume_feature = get_consume_feature(subscription.consume_features, feature.id) %>
       <% if consume_feature %>
         <li class='list-group-item'>
           <strong class='text-primary'> Unit Cosnsumed: </strong>
@@ -38,7 +36,7 @@
   <hr class='border border-success border-3'>
 <% end %>
 <div class='my-3'>
-   <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-success'%>
+   <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @buyer.id }), method: :create, class: 'btn btn-success'%>
 </div>
 <% if @bill %>
   <p class='text-center mt-2'>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_121616) do
+ActiveRecord::Schema.define(version: 2022_10_11_200146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2022_10_10_121616) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "feature_id", null: false
-    t.integer "unit_consumed", default: 0
     t.index ["feature_id"], name: "index_feature_plans_on_feature_id"
     t.index ["plan_id"], name: "index_feature_plans_on_plan_id"
   end
@@ -95,7 +94,6 @@ ActiveRecord::Schema.define(version: 2022_10_10_121616) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "price"
-    t.integer "max_unit_limit"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end

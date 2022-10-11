@@ -1,5 +1,4 @@
 class Api::V1::SubscriptionsController < Api::ApiController
-  respond_to :json
 
   def create
     if params[:plan_id].blank? || current_user.blank?
@@ -16,16 +15,12 @@ class Api::V1::SubscriptionsController < Api::ApiController
   end
 
   def destroy
-    if params[:id].blank? || current_user.blank?
-      render json: {status: 'Failed', message: 'Missing Parameters'}
+    @subscription = current_user.subscriptions.find(params[:id])
+    if @subscription.nil?
+      render json: {status: 'Failed', message: 'You do not have any subscription!'}
     else
-      @subscription = current_user.subscriptions.find(params[:id])
-      if @subscription.nil?
-        render json: {status: 'Failed', message: 'You do not have any subscription!'}
-      else
-        @subscription.destroy
-        render json: {status: 'Success', message: 'You unsubscribed this plan'}
-      end
+      @subscription.destroy
+      render json: {status: 'Success', message: 'You unsubscribed this plan'}
     end
   end
 end

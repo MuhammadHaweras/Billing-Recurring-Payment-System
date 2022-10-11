@@ -19,7 +19,7 @@ class Buyer::SubscriptionsController < ApplicationController
   private
 
   def set_subscription
-    @subscription = Subscription.find(params[:id])
+    @subscription = current_user.subscriptions.find(params[:id])
   end
 
   def subscription_params

@@ -1,8 +1,8 @@
 class Buyer::ConsumeFeaturesController < ApplicationController
 
   def increment_consumed_unit
-    @consume_unit = ConsumeFeature.find_or_create_by(consume_feature_params)
-    @consume_unit.increment!(:consume_units)
+    @consume_feature = ConsumeFeature.find_or_create_by(consume_feature_params)
+    @consume_feature.increment!(:consume_units)
     respond_to do |format|
       format.js
     end
