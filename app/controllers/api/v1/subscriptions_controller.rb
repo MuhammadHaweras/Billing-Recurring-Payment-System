@@ -16,10 +16,10 @@ class Api::V1::SubscriptionsController < Api::ApiController
   end
 
   def destroy
-    if params[:plan_id].blank? || current_user.blank?
+    if params[:id].blank? || current_user.blank?
       render json: {status: 'Failed', message: 'Missing Parameters'}
     else
-      @subscription = current_user.subscriptions.find_by_plan_id(params[:plan_id])
+      @subscription = current_user.subscriptions.find(params[:id])
       if @subscription.nil?
         render json: {status: 'Failed', message: 'You do not have any subscription!'}
       else
