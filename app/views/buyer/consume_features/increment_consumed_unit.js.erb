@@ -1,6 +1,6 @@
 <% if @consume_feature.errors.any? %>
-  $('.error-<%= @consume_feature.feature_id %>').removeClass('d-none')
+  $('.error-<%= @consume_feature.feature_id %>-<%= @consume_feature.subscription_id %>').removeClass('d-none')
 <% else %>
-  $('#consume-<%= @consume_feature.feature_id %>').html('<%= @consume_feature.consume_units %>')
-  $('.message-<%= @consume_feature.feature_id %>').removeClass('d-none')
+  $('#consume-<%= @consume_feature.feature_id %>-<%= @consume_feature.subscription_id %>').html('<%= @consume_feature.consume_units %>')
+  $('.message-<%= @consume_feature.feature_id %>-<%= @consume_feature.subscription_id %>').removeClass('d-none')
 <% end %>

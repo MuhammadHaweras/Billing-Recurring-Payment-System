@@ -3,7 +3,7 @@
   <%= f.input :monthly_fee %>
   <div id='feature-plans'>
     <%= f.simple_fields_for :feature_plans do |feature| %>
-      <%= render 'feature_plan_fields',:f => feature %>
+      <%= render 'feature_plan_fields', f: :feature %>
     <% end %>
   </div>
   <div class="links">

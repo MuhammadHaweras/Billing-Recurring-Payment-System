@@ -2,8 +2,6 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, validate_on_invite: true
 
-  before_create :generate_auth_token!
-
   validates :avatar, attached: true,
                         content_type: %i[png jpg jpeg],
                         size: { less_than: 2.megabytes , message: 'must be less than 2MB in size' }

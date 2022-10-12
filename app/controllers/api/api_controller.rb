@@ -15,6 +15,6 @@ class Api::ApiController < ActionController::Base
   end
 
   def not_found
-    render json: {errors: 'Not Found'}, status: 404
+    render json: {status: :not_found}
   end
 end

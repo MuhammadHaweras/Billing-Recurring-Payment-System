@@ -16,10 +16,6 @@ class Admin::PaymentsController < Admin::AdminsController
 
   private
 
-  def set_payment
-    @payment = Payment.find(params[:id])
-  end
-
   def payment_params
     params.require(:payment).permit(:user_id, :plan_id, :total_bill)
   end

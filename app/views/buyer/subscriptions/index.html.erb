@@ -27,15 +27,15 @@
       <% if consume_feature %>
         <li class='list-group-item d-flex flex-row'>
           <strong class='text-primary '>Consumed Units: </strong>
-          <div id='consume-<%=feature.id%>' class ='ms-1'>
+          <div id='consume-<%= feature.id %>-<%= subscription.id %>' class ='ms-1'>
           <%= consume_feature.consume_units %></div>
         </li>
-        <li class='list-group-item d-none message-<%=feature.id%>'>
+        <li class='list-group-item d-none message-<%=feature.id%>-<%= subscription.id %>'>
           <div class='alert alert-success' role='alert'>
             Unit consumed for this feature!
           </div>
         </li>
-        <li class='list-group-item d-none error-<%=feature.id%>'>
+        <li class='list-group-item d-none error-<%=feature.id%>-<%= subscription.id %>'>
           <div class='alert alert-danger' role='alert'>
             Error! Couldn't consume this feature!
           </div>
@@ -48,7 +48,6 @@
       <li class='list-group-item'>
         <%= link_to 'Consume Unit', increment_consumed_unit_buyer_consume_feature_path(feature.id, cosume_feature: {feature_id: feature.id, subscription_id: subscription.id}), method: :patch, class: 'btn btn-success', remote: true %>
     <% end %>
-
     <hr class='border border-success border-2 mb-4'>
   <% end %>
 </ul>
