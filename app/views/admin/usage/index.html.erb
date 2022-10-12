@@ -11,8 +11,13 @@
             <h5 class='card-title'>
               <div class='text-primary mb-2'>User Email: </div> <%= user.email %>
             </h5>
-            <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
+            <div class='d-flex flex-row'>
+              <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
               <%= link_to 'View Subscribed Plans',  admin_usage_path(user), class:'btn btn-primary' %>
+              </div>
+              <div>
+                <%= link_to 'View Payments',  admin_payment_path(user), class:'btn btn-primary ms-4 mt-4' %>
+              </div>
             </div>
           </div>
         </div>

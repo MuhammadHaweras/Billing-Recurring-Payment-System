@@ -48,16 +48,24 @@
       <li class='list-group-item'>
         <%= link_to 'Consume Unit', increment_consumed_unit_buyer_consume_feature_path(feature.id, cosume_feature: {feature_id: feature.id, subscription_id: subscription.id}), method: :patch, class: 'btn btn-success', remote: true %>
     <% end %>
+
     <hr class='border border-success border-2 mb-4'>
   <% end %>
 </ul>
-<div class='mb-3'>
+
+<div class='mb-3 d-flex flex-row'>
   <% if @bill %>
-    <h5 class='text-danger ms-4'> Your Bill is: <%= @bill.total_bill %>$
+    <h5 class='text-danger ms-4'> Due Bill is:
+      <%= current_user.payments.where(payment: false).pluck(:total_bill).sum %>$
       <button type='button' class='btn  btn-warning my-4 ms-3' data-bs-toggle='modal' data-bs-target='#invoice'>
         View Invoice
       </button>
       <%= render 'shared/invoice' %>
     </h5>
   <% end %>
+  <div>
+    <%= link_to 'Please Pay to enjoy Services',buyer_payments_path,
+                                           class: 'btn btn-info mt-4 ms-4' %>
+  </div>
 </div>
+

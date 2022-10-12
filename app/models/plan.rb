@@ -6,4 +6,5 @@ class Plan < ApplicationRecord
   accepts_nested_attributes_for :feature_plans, reject_if: :all_blank, allow_destroy: true
   has_many :subscriptions
   has_many :users, through: :subscriptions
+  has_many :payments
 end

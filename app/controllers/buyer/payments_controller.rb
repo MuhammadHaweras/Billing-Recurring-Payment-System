@@ -6,6 +6,6 @@ class Buyer::PaymentsController < ApplicationController
   def payment_status
     @payment = current_user.payments.find(params[:id])
     @payment.update(payment: true )
-    redirect_to buyer_subscriptions_path, notice: 'Bill amount has been deducted from your account'
+    redirect_to buyer_payments_path, notice: 'Bill amount has been deducted from your account'
   end
 end

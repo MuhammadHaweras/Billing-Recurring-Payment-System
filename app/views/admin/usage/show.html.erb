@@ -1,9 +1,4 @@
 <h1 class='text-center text-primary my-2'>Subscribed Plans</h1>
-<% if @bill.payment? %>
-  <h3> <span class="badge rounded-pill bg-success">Paid</span> </h3>
-<% else %>
-  <h3> <span class="badge rounded-pill bg-danger">Not Paid</span> </h3>
-<% end %>
 <% @subscriptions.each do |subscription| %>
   <ul class='list-group'>
     <li class='list-group-item'>
@@ -33,13 +28,13 @@
       <% end %>
     <% end %>
   </ul>
+  <li class='list-group-item my-2'>
+     <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @buyer.id, plan_id: subscription.plan.id}), method: :create, class: 'btn btn-success'%>
+  </li>
   <hr class='border border-success border-3'>
 <% end %>
-<div class='my-3'>
-   <%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @buyer.id }), method: :create, class: 'btn btn-success'%>
-</div>
-<% if @bill %>
-  <p class='text-center mt-2'>
-    <strong class='text-success'>Total Bill: </strong><%= @bill.total_bill %>$</li>
-  </p>
-<% end %>
+
+<p class='text-center mt-2'>
+  <strong class='text-success'>Due Bill is: </strong>
+  <%= @buyer.payments.where(payment: false).pluck(:total_bill).sum %>$</li>
+</p>

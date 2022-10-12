@@ -39,13 +39,11 @@
           <% end %>
         </ul>
         <p class='text-center mt-2'>
-          <strong class='text-success'>Total Bill: </strong><%= @bill.total_bill %>$</li>
+          <strong class='text-success'>Total Bill: </strong><%= current_user.payments.pluck(:total_bill).sum  %>$</li>
         </p>
       </div>
       <div class='modal-footer'>
         <button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Close</button>
-        <%  @payment = Payment.where(user_id: current_user.id).last %>
-        <%= link_to 'Pay Now', payment_status_buyer_payment_path(@payment), method: :patch, class:'btn btn-success' %>
       </div>
     </div>
   </div>
