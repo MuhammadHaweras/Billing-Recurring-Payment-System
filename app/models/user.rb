@@ -10,8 +10,9 @@ class User < ApplicationRecord
 
   enum role: ROLES
 
-  has_one_attached :avatar
+  scope :user_subscriptions, -> { joins(:subscriptions).distinct }
 
+  has_one_attached :avatar
   has_many :subscriptions
   has_many :payments
   has_many :plans, through: :subscriptions

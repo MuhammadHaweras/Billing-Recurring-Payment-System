@@ -37,7 +37,7 @@ class Admin::PlansController < Admin::AdminsController
   private
 
   def plan_params
-    params.require(:plan).permit(:id, :plan_name, :monthly_fee, feature_plans_attributes: [:id, :plan_id, :feature_id, :allocated_units, :_destroy])
+    params.require(:plan).permit(:plan_name, :monthly_fee, feature_plans_attributes: [:id, :plan_id, :feature_id, :allocated_units, :_destroy])
   end
 
   def set_plan

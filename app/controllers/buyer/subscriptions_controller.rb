@@ -3,7 +3,7 @@ class Buyer::SubscriptionsController < ApplicationController
 
   def index
     @subscriptions = current_user.subscriptions.includes(:consume_features, plan: [feature_plans: [:feature]])
-    @bill = current_user.payments.last
+    @bill = current_user.payments
   end
 
   def create

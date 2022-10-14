@@ -14,7 +14,7 @@ class Admin::FeaturesController < Admin::AdminsController
   def edit; end
 
   def create
-    @feature = Feature.create(feature_params)
+    @feature = Feature.new(feature_params)
 
     if @feature.save
       redirect_to admin_features_path

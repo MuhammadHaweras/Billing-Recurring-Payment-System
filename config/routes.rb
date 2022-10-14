@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         delete 'signout', to: 'sessions#destroy'
       end
       resources :plans
+      post 'my_plans', to: 'plans#my_plans'
       post 'subscribe', to: 'subscriptions#create'
       delete 'unsubscribe', to: 'subscriptions#destroy'
     end

@@ -36,5 +36,5 @@
 
 <p class='text-center mt-2'>
   <strong class='text-success'>Due Bill is: </strong>
-  <%= @buyer.payments.where(payment: false).pluck(:total_bill).sum %>$</li>
+  <%= due_payment(@buyer) %>$</li>
 </p>

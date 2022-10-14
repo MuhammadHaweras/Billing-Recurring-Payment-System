@@ -1,6 +1,6 @@
 class Admin::UsageController < Admin::AdminsController
   def index
-    @users = User.joins(:subscriptions).distinct
+    @users = User.user_subscriptions
   end
 
   def show
