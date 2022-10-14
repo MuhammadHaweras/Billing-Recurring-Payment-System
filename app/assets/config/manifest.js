@@ -11,7 +11,9 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery_ujs
+
+//= require turbolinks
+//= require select2
 //= require_tree .
 //= link_tree ../images
 //= link_directory ../stylesheets .css

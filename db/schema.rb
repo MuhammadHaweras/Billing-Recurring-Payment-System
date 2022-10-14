@@ -10,10 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_26_131031) do
+ActiveRecord::Schema.define(version: 2022_10_12_051434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "consume_features", force: :cascade do |t|
+    t.bigint "subscription_id", null: false
+    t.bigint "feature_id", null: false
+    t.integer "consume_units", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_id"], name: "index_consume_features_on_feature_id"
+    t.index ["subscription_id"], name: "index_consume_features_on_subscription_id"
+  end
+
+  create_table "feature_plans", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "feature_id", null: false
+    t.index ["feature_id"], name: "index_feature_plans_on_feature_id"
+    t.index ["plan_id"], name: "index_feature_plans_on_plan_id"
+  end
 
   create_table "features", force: :cascade do |t|
     t.string "feature_name"
@@ -22,13 +69,22 @@ ActiveRecord::Schema.define(version: 2022_09_26_131031) do
     t.integer "max_unit_limit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "plan_id", null: false
-    t.index ["plan_id"], name: "index_features_on_plan_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "total_bill"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "payment", default: false
+    t.bigint "plan_id"
+    t.index ["plan_id"], name: "index_payments_on_plan_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "plans", force: :cascade do |t|
     t.string "plan_name"
-    t.string "monthly_fee"
+    t.decimal "monthly_fee"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -39,6 +95,7 @@ ActiveRecord::Schema.define(version: 2022_09_26_131031) do
     t.bigint "plan_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "price"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
@@ -61,6 +118,12 @@ ActiveRecord::Schema.define(version: 2022_09_26_131031) do
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.integer "role"
+    t.string "auth_token"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
@@ -68,5 +131,12 @@ ActiveRecord::Schema.define(version: 2022_09_26_131031) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "features", "plans"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "consume_features", "features"
+  add_foreign_key "consume_features", "subscriptions"
+  add_foreign_key "feature_plans", "features"
+  add_foreign_key "feature_plans", "plans"
+  add_foreign_key "payments", "plans"
+  add_foreign_key "payments", "users"
 end

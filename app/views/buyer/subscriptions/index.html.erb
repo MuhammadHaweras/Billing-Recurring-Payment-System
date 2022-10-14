@@ -1,0 +1,71 @@
+<h1 class='text-center text-info my-4'> Your Subscriptions </h1>
+<ul class='list-group'>
+  <% @subscriptions.each do |subscription| %>
+    <li class='list-group-item'>
+      <strong class='text-primary'>Subscription Name: </strong>
+      <%= subscription.subscription_name %>
+    </li>
+    <li class='list-group-item'>
+      <strong class='text-primary'>Price: </strong> <%= subscription.price %>$
+    </li>
+    <li class='list-group-item'>
+      <%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    </li>
+    <% subscription.plan.features.each do |feature| %>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Feature Name: </strong>
+        <%= feature.feature_name %>
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Unit Price: </strong> <%= feature.unit_price %>$
+      </li>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Max Unit Limit: </strong>
+        <%= feature.max_unit_limit %>
+      </li>
+      <% consume_feature = get_consume_feature(subscription.consume_features, feature.id) %>
+      <% if consume_feature %>
+        <li class='list-group-item d-flex flex-row'>
+          <strong class='text-primary '>Consumed Units: </strong>
+          <div id='consume-<%= feature.id %>-<%= subscription.id %>' class ='ms-1'>
+          <%= consume_feature.consume_units %></div>
+        </li>
+        <li class='list-group-item d-none message-<%=feature.id%>-<%= subscription.id %>'>
+          <div class='alert alert-success' role='alert'>
+            Unit consumed for this feature!
+          </div>
+        </li>
+        <li class='list-group-item d-none error-<%=feature.id%>-<%= subscription.id %>'>
+          <div class='alert alert-danger' role='alert'>
+            Error! Couldn't consume this feature!
+          </div>
+        </li>
+      <% else %>
+        <li class='list-group-item'>
+          <strong class='text-primary'>Consumed Units: </strong> 0
+        </li>
+      <% end %>
+      <li class='list-group-item'>
+        <%= link_to 'Consume Unit', increment_consumed_unit_buyer_consume_feature_path(feature.id, consume_feature: {feature_id: feature.id, subscription_id: subscription.id}), method: :patch, class: 'btn btn-success', remote: true %>
+       </li>
+    <% end %>
+    <hr class='border border-success border-2 mb-4'>
+  <% end %>
+</ul>
+
+<div class='mb-3 d-flex flex-row'>
+  <% if @bill %>
+    <h5 class='text-danger ms-4'> Due Bill is:
+      <%= due_payment(current_user)%>$
+      <button type='button' class='btn  btn-warning my-4 ms-3' data-bs-toggle='modal'
+         data-bs-target='#invoice'>
+        View Invoice
+      </button>
+      <%= render 'shared/invoice' %>
+    </h5>
+  <% end %>
+  <div>
+    <%= link_to 'Please Pay to enjoy Services',buyer_payments_path,
+                                           class: 'btn btn-info mt-4 ms-4' %>
+  </div>
+</div>

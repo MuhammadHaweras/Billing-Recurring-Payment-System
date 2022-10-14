@@ -13,7 +13,9 @@ Turbolinks.start();
 ActiveStorage.start();
 
 jQuery = require('jquery')
+require('@nathanvda/cocoon')
 import 'bootstrap';
 import '../stylesheets/application';
+require('packs/select2setup')
 global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;

@@ -1,0 +1,28 @@
+<h2 class='text-success text-center my-3'> Your Payments Track </h2>
+<table class='table table-hover table-sm my-4'>
+  <thead class='table-light'>
+    <tr>
+      <th class='scope'>Amount</th>
+      <th class='scoper'> Subscription </th>
+      <th class='scope'>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment_bill|  %>
+      <tr>
+        <td> <p class='my-2'> <%= payment_bill.total_bill %>$ </p> </td>
+        <td> <p class='my-2'> <%= payment_bill.plan.plan_name %> </p> </td>
+        <% if payment_bill.payment? %>
+          <td>
+            <h4 class='my-2'> <span class='badge rounded-pill bg-success'>Paid</span> </h4>
+          </td>
+        <% else %>
+          <td class='d-flex flex-row'>
+            <h4 class='my-2'>
+            <span class='badge rounded-pill bg-danger'> Not Paid</span>
+            </h4>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

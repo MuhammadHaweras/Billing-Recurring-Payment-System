@@ -1,0 +1,50 @@
+<div class='modal fade' id='invoice' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='exampleModalLabel'> Bill Details</h5>
+        <button type='button' class='btn-close text-center' data-bs-dismiss='modal' aria-label='Close'></button>
+      </div>
+      <div class='modal-body'>
+        <ul class='list-group'>
+          <% @subscriptions.each do |subscription| %>
+            <li class='list-group-item'>
+              <strong class='text-primary'>Subscription Name: </strong>
+              <%= subscription.subscription_name %>
+            </li>
+            <li class='list-group-item'>
+              Price: <%= subscription.price %>$
+            </li>
+            <li class='list-group-item'>
+              <strong class='text-success'>Feature(s): </strong>
+            </li>
+            <% subscription.plan.features.each do |feature| %>
+              <li class='list-group-item'> <%= feature.feature_name %> </li>
+              <li class='list-group-item'>
+                <p class='ms-2 mb-0'>Unit Price: <%= feature.unit_price %>$ </p>
+              </li>
+              <% consume_feature = get_consume_feature(subscription.consume_features, feature.id) %>
+              <% if consume_feature && consume_feature.consume_units - feature.max_unit_limit > 0 %>
+                <li class='list-group-item'>
+                  <strong class='text-danger ms-4'> Exceed Units: </strong>
+                  <%= consume_feature.consume_units - feature.max_unit_limit %>
+                </li>
+                <li class='list-group-item'>
+                  <strong class='text-danger ms-4'> Exceed Units Price: </strong>
+                  <%= (consume_feature.consume_units - feature.max_unit_limit) * feature.unit_price %>$
+                </li>
+              <% end %>
+            <% end %>
+            <hr class='border border-success border-2 mb-4'>
+          <% end %>
+        </ul>
+        <p class='text-center mt-2'>
+          <strong class='text-success'>Total Bill: </strong><%= current_user.payments.pluck(:total_bill).sum  %>$</li>
+        </p>
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>

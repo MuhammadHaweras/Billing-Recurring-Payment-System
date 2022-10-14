@@ -1,5 +1,13 @@
 <%= simple_form_for [:admin, @plan] do |f| %>
   <%= f.input :plan_name %>
   <%= f.input :monthly_fee %>
+  <div id='feature-plans'>
+    <%= f.simple_fields_for :feature_plans do |feature| %>
+      <%= render 'feature_plan_fields', f: :feature %>
+    <% end %>
+  </div>
+  <div class="links">
+    <%= link_to_add_association 'Add Feature', f, :feature_plans, class: 'btn btn-success my-2', form_name: 'f' %>
+  </div>
   <%= f.button :submit, class: 'btn btn-default btn-primary my-4' %>
 <% end %>

@@ -1,19 +1,16 @@
-<div class='card my-2'>
+<div class='card my-5'>
   <div class='card-header text-primary'>
     <strong><%= @plan.plan_name %></strong>
   </div>
-
-    <ul class='list-group list-group-flush'>
-      <li class='list-group-item text-success'>
-       <strong class='text-primary'>Price: </strong> <%= @plan.monthly_fee %>
-      </li>
-      <li class='list-group-item'> <strong>Features:</strong> <%= render @plan.features %> </li>
-      <li class='list-group-item'>
-        <div>
-          <%= link_to 'Back', buyer_plans_path, class:'btn btn-info' %>
-          <%= link_to 'Subscribe', '#', class:'btn btn-warning m-2' %>
-        </div>
-      </li>
-    </ul>
-
+  <ul class='list-group list-group-flush'>
+    <li class='list-group-item text-success'>
+      <strong class='text-primary'>Price: </strong> <%= @plan.monthly_fee %>$
+    </li>
+    <li class='list-group-item'> <strong>Features:</strong> <%= render @plan.features %> </li>
+    <li class='list-group-item'>
+      <div>
+        <%= link_to 'Back', buyer_plans_path, class:'btn btn-info' %>
+      </div>
+    </li>
+  </ul>
 </div>

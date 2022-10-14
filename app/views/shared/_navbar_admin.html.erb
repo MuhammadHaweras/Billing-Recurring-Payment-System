@@ -1,27 +1,29 @@
 <nav class='navbar navbar-expand-lg navbar-primary bg-primary d-flex'>
-  <%= link_to 'BMRS', admin_plans_path,  class: 'navbar-brand px-2' %>
-  <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
-    <span class='navbar-toggler-icon'></span>
-  </button>
-  <div class='collapse navbar-collapse' id='navbarNav'>
-    <ul class='navbar-nav'>
-      <li class='nav-item'>
-        <%= link_to 'Home', admin_plans_path, class: 'btn btn-primary ml-2' %>
-      </li>
-      <li class='nav-item'>
-        <%= link_to 'All Plans', admin_plans_path, class: 'btn btn-primary ml-2' %>
-      </li>
-      <li class='nav-item'>
-        <%= link_to 'New Plan', new_admin_plan_path, class: 'btn btn-primary ml-2' %>
-      </li>
-      <li class='nav-item'>
-        <%= link_to 'Send Invitation', new_user_invitation_path, class: 'btn btn-primary ml-2' %>
-      </li>
-    </ul>
-  </div>
-
-  <div class='justify-content-end mx-2'>
-    <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-warning' %>
-    <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+  <div class='container-fluid'>
+    <%= link_to 'BMRS', admin_plans_path, class: 'navbar-brand px-2 d-flex' %>
+    <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
+    <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
+      <div class='navbar-nav'>
+        <%= link_to 'Home', admin_plans_path, class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'Plans', admin_plans_path, class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'New Plan', new_admin_plan_path,
+                                class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'Features', admin_features_path,
+                                class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'New Feature', new_admin_feature_path,
+                                class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'Subscribed Users', admin_usage_index_path,
+                                class: 'btn btn-primary ml-2 nav-link' %>
+        <%= link_to 'Send Invitation', new_user_invitation_path,
+                                class: 'btn btn-primary ml-2 nav-link' %>
+      </div>
+    </div>
+    <div class='justify-content-end mx-2'>
+      <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-warning' %>
+      <%= link_to 'Log Out', destroy_user_session_path, method: :delete,
+                                class: 'btn btn-danger' %>
+    </div>
   </div>
 </nav>

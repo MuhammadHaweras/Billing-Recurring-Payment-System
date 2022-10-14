@@ -5,7 +5,11 @@
 
   <% resource.class.invite_key_fields.each do |field| -%>
       <%= f.input :name %>
-      <%= f.input field , class: 'mt-2' %>
+      <%= f.input field , class: 'my-2' %>
+      <div class='my-4'>
+        <%= f.input :avatar, required: true %>
+      </div>
+
       <p  class='mt-4 font-bold'>Role: <%= f.select :role, options_for_select(User::ROLES.values_at(1)) %><p>
   <% end %>
 
